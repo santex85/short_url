@@ -14,7 +14,7 @@ app = FastAPI()
 def create_link(link: LinkCreate, db: Session = Depends(get_db)):
     try:
         # Проверка валидности URL
-        valid_url = LinkCreate.validate_url(link.original_url)
+        valid_url = link.validate_url(link.original_url)
 
         # Начало транзакции
         db.begin()
@@ -47,10 +47,13 @@ def create_link(link: LinkCreate, db: Session = Depends(get_db)):
 
 
 # API-эндпоинт для получения оригинальной ссылки по короткой
+@app.get("/link/{short_url}")
 def read_link(short_url: str, db: Session = Depends(get_db)) -> Dict[str, str]:
     db_link = db.query(Link).filter(Link.short_url == short_url).first()
+
     if not db_link:
         raise HTTPException(status_code=404, detail="Link not found")  # если не найдено, возвращаем ошибку
+
     return {"original_url": db_link.original_url}
 
 
