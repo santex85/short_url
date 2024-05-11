@@ -2,7 +2,7 @@
 import random
 import string
 
-from db import SessionLocal
+from app.db import SessionLocal
 
 
 def generate_short_link():

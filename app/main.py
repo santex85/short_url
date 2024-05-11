@@ -2,9 +2,9 @@ from typing import Dict
 
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from db import Link
-from pydantic_models import LinkCreate
-from utils import get_db, generate_short_link
+from app.db import Link
+from app.pydantic_models import LinkCreate
+from app.utils import get_db, generate_short_link
 
 app = FastAPI()
 
